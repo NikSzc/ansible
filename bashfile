@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+sudo apt install git -y
+
+git clone https://github.com/NikSzc/ansible.git
+cd ansible
+
+
+sudo ansible-playbook -i inventory.ini install.yml
