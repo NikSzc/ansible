@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install bzip2 -y
+
 CD_DEVICE="/dev/cdrom"
 MOUNT_POINT="/media/cdrom"
 VBOX_RUN="VBoxLinuxAdditions.run"

@@ -16,4 +16,12 @@
           - rofi
           - git
           - alacritty
+          - chromium
+          - feh
+          - i3blocks
+          - fzf
+          - gcc
+          - ripgrep
+          - unzip
+          - xclip
         state: latest
