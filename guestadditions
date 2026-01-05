@@ -1,0 +1,43 @@
+#!/bin/bash
+
+CD_DEVICE="/dev/cdrom"
+MOUNT_POINT="/media/cdrom"
+VBOX_RUN="VBoxLinuxAdditions.run"
+
+# Prüfen, ob CD-Gerät existiert
+if [ ! -e "$CD_DEVICE" ]; then
+    echo "CD-Gerät $CD_DEVICE existiert nicht."
+    exit 1
+fi
+
+# Prüfen, ob eine CD eingelegt ist
+if ! blkid "$CD_DEVICE" &>/dev/null; then
+    echo "Keine CD eingelegt."
+    exit 0
+fi
+
+# Mountpunkt anlegen, falls er nicht existiert
+if [ ! -d "$MOUNT_POINT" ]; then
+    mkdir -p "$MOUNT_POINT"
+fi
+
+# Prüfen, ob bereits gemountet
+if ! mount | grep -q "$MOUNT_POINT"; then
+    mount "$CD_DEVICE" "$MOUNT_POINT"
+    if [ $? -ne 0 ]; then
+        echo "Mounten der CD fehlgeschlagen."
+        exit 1
+    fi
+fi
+
+# In den CD-Ordner wechseln
+cd "$MOUNT_POINT" || exit 1
+
+# Prüfen, ob VBoxLinuxAdditions.run existiert
+if [ -f "$VBOX_RUN" ]; then
+    echo "VBoxLinuxAdditions.run gefunden – starte Installation."
+    chmod +x "$VBOX_RUN"
+    ./"$VBOX_RUN"
+else
+    echo "VBoxLinuxAdditions.run nicht gefunden."
+fi
