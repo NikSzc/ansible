@@ -2,10 +2,9 @@
 
 set -e
 
-sudo apt install git -y
+sudo apt install git ansible -y
 
 git clone https://github.com/NikSzc/ansible.git
 cd ansible
-
 
 sudo ansible-playbook -i inventory.ini install.yml
