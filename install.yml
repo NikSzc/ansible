@@ -1,27 +1,41 @@
 ---
-- name: Lokales Debian Setup
+- name: setting up the system
   hosts: local
   become: true
 
   tasks:
-    - name: APT Cache aktualisieren
+    - name: updating apt
       apt:
         update_cache: yes
 
-    - name: Programme installieren
+    - name: installing requirements
       apt:
         name:
-          - xorg
-          - i3
-          - rofi
           - git
-          - alacritty
-          - chromium
-          - feh
-          - i3blocks
+          - curl
           - fzf
           - gcc
           - ripgrep
           - unzip
           - xclip
+          - make
         state: latest
+
+    - name: installing desktop tools
+      apt:
+        name:
+          - xorg
+          - i3
+          - i3blocks
+          - picom
+          - feh
+          - rofi
+          - alacritty
+          - chromium
+
+    - name: installing prgramming tools
+      apt:
+        name:
+          - npm
+          - luarocks
+          - python3-venv
